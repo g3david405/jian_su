@@ -238,6 +238,9 @@ def Article():
         dt_string = time_now.strftime("%Y-%m-%d %H:%M:%S")
         postid = req["postid"]
         post = Posts.query.filter_by(id=postid).first()
+        comments = post.comments
+        for item in comments:
+            db.session.delete(item)
         user = post.author
         db.session.delete(post)
         db.session.commit()
